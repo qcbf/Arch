@@ -143,7 +143,6 @@ public partial class World
         world.Size = 0;
 
         // Dispose
-        world.JobHandles.Dispose();
         world.GroupToArchetype.Dispose();
         world.RecycledIds.Dispose();
         world.QueryCache.Dispose();
@@ -183,7 +182,7 @@ public partial class World : IDisposable
     /// <param name="baseChunkEntityCount">The minimum amount of <see cref="Entity"/>s per <see cref="Chunk"/>.</param>
     /// <param name="archetypeCapacity">The initial capacity for <see cref="Archetypes"/>.</param>
     /// <param name="entityCapacity">The initial capacity for <see cref="Entity"/>s.</param>
-    private World(int id, int baseChunkSize, int baseChunkEntityCount, int archetypeCapacity, int entityCapacity)
+    public World(int id, int baseChunkSize, int baseChunkEntityCount, int archetypeCapacity, int entityCapacity)
     {
         Id = id;
 
@@ -197,10 +196,6 @@ public partial class World : IDisposable
 
         // Query.
         QueryCache = new PooledDictionary<QueryDescription, Query>(archetypeCapacity);
-
-        // Multithreading/Jobs.
-        JobHandles = new PooledList<JobHandle>(Environment.ProcessorCount);
-        JobsCache = new List<IJob>(Environment.ProcessorCount);
 
         // Config
         BaseChunkSize = baseChunkSize;
@@ -439,7 +434,6 @@ public partial class World : IDisposable
 
         // Clear
         RecycledIds.Clear();
-        JobHandles.Clear();
         GroupToArchetype.Clear();
         EntityInfo.Clear();
         QueryCache.Clear();

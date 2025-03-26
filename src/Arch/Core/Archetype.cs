@@ -5,7 +5,6 @@ using Arch.Core.Utils;
 using Arch.LowLevel;
 using Arch.LowLevel.Jagged;
 using Collections.Pooled;
-using CommunityToolkit.HighPerformance;
 using Array = System.Array;
 
 namespace Arch.Core;
